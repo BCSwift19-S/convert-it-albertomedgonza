@@ -16,45 +16,44 @@ class ViewController: UIViewController {
     @IBOutlet weak var formulaPicker: UIPickerView!
     
     var formulaArray = ["miles to kilometers", "kilometers to miles", "feet to meters", "yards to meters", "meters to feet", "meters to yards"]
-    
     var fromUnits = ""
     var toUnits = ""
     var conversionString = ""
+}
 
     override func viewDidLoad() {
         super.viewDidLoad()
         formulaPicker.delegate = self
         formulaPicker.dataSource = self
-        
+        conversionString = formulaArray[formulaPicker.selectedRow(inComponent: 0)]
     }
     
     func calculateConversion() {
-        
-        var outputVale = 0.0
-        if let inputValue = Double(userInput.text!) {
+        guard let inputValue = Double(userInput.text!) else {
+            print("show alert here to say the value entered was not number")
+            return
+        }
+            var outputValue = 0.0
             switch conversionString {
             case "miles to kilometers":
-                outputVale = inputValue / 0.62137
+                outputValue = inputValue / 0.62137
             case "kilometers to miles":
-                outputVale = inputValue * 0.62137
+                outputValue = inputValue * 0.62137
             case "feet to meters":
-                outputVale = inputValue / 3.2808
+                outputValue = inputValue / 3.2808
             case "yards to meters":
-                outputVale = inputValue / 1.0936
+                outputValue = inputValue / 1.0936
             case "meters to feet":
-                outputVale = inputValue * 3.2808
+                outputValue = inputValue * 3.2808
             case "meters to yards":
-                outputVale = inputValue * 1.0936
+                outputValue = inputValue * 1.0936
             default:
                 print("show alert - for some reason we didnt have a conversion string")
             }
-            resultsLabel.text = "\(inputValue) \(fromUnits) = \(outputVale) \(toUnits)"
-        } else {
-            print("show alert here to say the value entered was not number")
-        }
+            resultsLabel.text = "\(inputValue) \(fromUnits) = \(outputValue) \(toUnits)"
        
         }
-    }
+    
 
 func convertButtonPressed(_ sender: UIButton) {
     }
@@ -84,3 +83,4 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         calculateConversion()
     }
 }
+
